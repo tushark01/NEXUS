@@ -1,8 +1,10 @@
 <p align="center">
+  <a href="https://github.com/tushark01/NEXUS"><img src="https://img.shields.io/github/stars/tushark01/NEXUS?style=for-the-badge&logo=github&color=yellow" /></a>
   <img src="https://img.shields.io/badge/python-3.11+-blue?style=for-the-badge&logo=python&logoColor=white" />
   <img src="https://img.shields.io/badge/license-MIT-green?style=for-the-badge" />
   <img src="https://img.shields.io/badge/version-0.1.0-purple?style=for-the-badge" />
   <img src="https://img.shields.io/badge/agents-multi--swarm-ff6b6b?style=for-the-badge" />
+  <a href="https://github.com/tushark01/NEXUS/issues"><img src="https://img.shields.io/github/issues/tushark01/NEXUS?style=for-the-badge&color=orange" /></a>
 </p>
 
 ```
@@ -191,8 +193,8 @@ Most AI agent frameworks are glorified prompt wrappers. They chain LLM calls, ca
 
 ```bash
 # Clone the repository
-git clone https://github.com/your-username/nexus-agent.git
-cd nexus-agent
+git clone https://github.com/tushark01/NEXUS.git
+cd NEXUS
 
 # Install core dependencies
 pip install -e .
@@ -683,8 +685,8 @@ nexus/
 sudo apt update && sudo apt install -y python3.11 python3.11-venv git
 
 # 3. Clone and setup
-git clone https://github.com/your-username/nexus-agent.git
-cd nexus-agent
+git clone https://github.com/tushark01/NEXUS.git
+cd NEXUS
 python3.11 -m venv venv
 source venv/bin/activate
 pip install -e ".[api]"
@@ -702,9 +704,9 @@ After=network.target
 [Service]
 Type=simple
 User=ubuntu
-WorkingDirectory=/home/ubuntu/nexus-agent
-Environment=PATH=/home/ubuntu/nexus-agent/venv/bin
-ExecStart=/home/ubuntu/nexus-agent/venv/bin/nexus-server
+WorkingDirectory=/home/ubuntu/NEXUS
+Environment=PATH=/home/ubuntu/NEXUS/venv/bin
+ExecStart=/home/ubuntu/NEXUS/venv/bin/nexus-server
 Restart=always
 RestartSec=5
 
@@ -895,6 +897,8 @@ Consensus:    4 voting strategies
 ## License
 
 MIT License. See [LICENSE](LICENSE) for details.
+
+Created by [Tushar](https://github.com/tushark01) | Repository: [github.com/tushark01/NEXUS](https://github.com/tushark01/NEXUS)
 
 ---
 
