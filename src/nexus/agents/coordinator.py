@@ -93,7 +93,27 @@ class CoordinatorAgent(BaseAgent):
             results_text += f"\n### Task {task_id}:\n{result}\n"
 
         prompt = SYNTHESIS_PROMPT.format(goal=goal, results=results_text)
-        return await self.think(prompt, complexity=TaskComplexity.COMPLEX)
+
+        # Use a dedicated synthesis call — NOT the coordinator system prompt
+        # which would make it return JSON strategy evaluation
+        from nexus.llm.schemas import LLMRequest, Message
+
+        messages = [
+            Message(
+                role="system",
+                content=(
+                    "You are a synthesis expert. Combine the task results below into a "
+                    "single, coherent, well-structured response. Write in clear prose, "
+                    "use Markdown formatting, and fully address the original goal."
+                ),
+            ),
+            Message(role="user", content=prompt),
+        ]
+        response = await self.llm.complete(
+            LLMRequest(messages=messages),
+            hint=TaskComplexity.COMPLEX,
+        )
+        return response.content
 
     async def handle_conflict(self, task_title: str, outputs: list[str]) -> str:
         """Resolve a conflict when multiple agents disagree."""

@@ -97,10 +97,25 @@ class SwarmOrchestrator:
         )
 
         if strategy == "direct":
-            # Simple goal — coordinator handles directly
+            # Simple goal — handle with a clean LLM call (not the coordinator's JSON prompt)
             yield SwarmUpdate("status", "Handling directly...")
-            result = await self._coordinator.process_task(goal, context)
-            yield SwarmUpdate("result", result, is_final=True)
+            from nexus.llm.schemas import LLMRequest, Message, TaskComplexity
+
+            direct_messages = [
+                Message(
+                    role="system",
+                    content="You are NEXUS, a hyper-intelligent AI assistant. Be helpful, precise, and thorough.",
+                ),
+            ]
+            if context:
+                direct_messages.append(Message(role="system", content=f"Context:\n{context}"))
+            direct_messages.append(Message(role="user", content=goal))
+
+            response = await self._llm.complete(
+                LLMRequest(messages=direct_messages),
+                hint=TaskComplexity.MEDIUM,
+            )
+            yield SwarmUpdate("result", response.content, is_final=True)
             return
 
         # Step 2: Planner decomposes into TaskDAG
